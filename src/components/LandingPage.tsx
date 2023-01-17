@@ -13,7 +13,11 @@ function LandingPage() {
         { delete: "game developer" },
         { write: "web developer" },
         { delete: "I'm a web developer" },
-        { write: "What I am?" },
+        { write: "Who I am?" },
+        { delete: "Who I am?" },
+        { write: "I think I only know one thing" },
+        { delete: "I think I only know one thing" },
+        { write: "We all live in a yellow submarine! " },
     ];
 
     const [jobPosition, setJobPosition] = useState("I'm a");
@@ -32,7 +36,7 @@ function LandingPage() {
             } else {
                 clearInterval(writeInterval);
             }
-        }, 50);
+        }, 30);
     }
 
     function deleteText(text: string) {
@@ -46,7 +50,7 @@ function LandingPage() {
             } else {
                 clearInterval(deleteInterval);
             }
-        }, 50);
+        }, 30);
     }
 
     useEffect(() => {
