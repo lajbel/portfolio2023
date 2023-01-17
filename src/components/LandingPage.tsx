@@ -1,71 +1,92 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const LandingPage = () => {
+function LandingPage() {
     const GLOBAL_DELAY = 0.0;
     const NAME_DELAY = 0.0;
     const JOB_DELAY = 0.3;
     const ALL_INFO_UP_DELAY = 1.6;
+
+    const TEXT_SENTENCES = [
+        { write: "game developer" },
+        { delete: "game developer" },
+        { write: "web developer" },
+        { delete: "I'm a web developer" },
+        { write: "What I am?" },
+    ];
+
     const [jobPosition, setJobPosition] = useState("I'm a");
+
+    let jobPositionText = jobPosition + " ";
 
     function writeText(text: string) {
         let i = 0;
         let textLength = text.length;
-        let tJobPosition = jobPosition + " ";
 
         const writeInterval = setInterval(() => {
-            console.log("p")
             if (i < textLength) {
-                tJobPosition += text.charAt(i);
-                setJobPosition(tJobPosition);
+                jobPositionText += text.charAt(i);
+                setJobPosition(jobPositionText);
                 i++;
-            }
-            else {
+            } else {
                 clearInterval(writeInterval);
             }
         }, 50);
     }
 
     function deleteText(text: string) {
-        let i = 0;
-        let textLength = text.length;
-        let tJobPosition = jobPosition + " ";
+        let i = text.length;
 
-        setInterval(() => {
-            if (i < textLength) {
-                tJobPosition += tJobPosition.substring(0, tJobPosition.length - 1);;
-                setJobPosition(tJobPosition);
-                i++;
+        const deleteInterval = setInterval(() => {
+            if (i > 0) {
+                jobPositionText = jobPositionText.slice(0, -1);
+                setJobPosition(jobPositionText);
+                i--;
+            } else {
+                clearInterval(deleteInterval);
             }
-        }, 50)
+        }, 50);
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            writeText("web developer");
-        }, 1700);
+        for (let i = 0; i < TEXT_SENTENCES.length; i++) {
+            if (TEXT_SENTENCES[i].delete) {
+                setTimeout(() => {
+                    deleteText(TEXT_SENTENCES[i].delete!);
+                }, 2700 + 2000 * i);
+            } else if (TEXT_SENTENCES[i].write) {
+                setTimeout(() => {
+                    writeText(TEXT_SENTENCES[i].write!);
+                }, 1700 + 2000 * i);
+            }
+        }
     }, []);
 
-
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-900 bg-cover bg-center" style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('background.webp')" }}>
+        <div
+            className="flex flex-col items-center justify-center h-screen bg-gray-900 bg-cover bg-center"
+            style={{
+                backgroundImage:
+                    "linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('background.webp')",
+            }}
+        >
             <motion.div
                 className="flex flex-col items-center justify-center"
-                initial={{ y: '0' }}
+                initial={{ y: "0" }}
                 animate={{ y: -40 }}
                 transition={{
-                    type: 'spring',
+                    type: "spring",
                     stiffness: 120,
                     delay: GLOBAL_DELAY + ALL_INFO_UP_DELAY,
                 }}
             >
                 <motion.h1
                     className="text-4xl font-bold text-white"
-                    initial={{ x: '-100vh' }}
+                    initial={{ x: "-100vh" }}
                     animate={{ x: 0 }}
                     transition={{
-                        type: 'spring',
+                        type: "spring",
                         stiffness: 120,
                         delay: GLOBAL_DELAY + NAME_DELAY,
                     }}
@@ -75,10 +96,10 @@ const LandingPage = () => {
 
                 <motion.p
                     className="text-2xl text-gray-300 text-center text-write"
-                    initial={{ y: '100vh' }}
+                    initial={{ y: "100vh" }}
                     animate={{ y: 0 }}
                     transition={{
-                        type: 'spring',
+                        type: "spring",
                         stiffness: 80,
                         delay: GLOBAL_DELAY + JOB_DELAY,
                     }}
@@ -90,10 +111,10 @@ const LandingPage = () => {
 
             <motion.div
                 className="flex flex-row items-center justify-center"
-                initial={{ y: '0', opacity: 0, }}
-                animate={{ y: -30, opacity: 1, }}
+                initial={{ y: "0", opacity: 0 }}
+                animate={{ y: -30, opacity: 1 }}
                 transition={{
-                    type: 'spring',
+                    type: "spring",
                     stiffness: 120,
                     delay: GLOBAL_DELAY + ALL_INFO_UP_DELAY,
                 }}
@@ -105,7 +126,7 @@ const LandingPage = () => {
                     className="ml-2"
                 >
                     <FontAwesomeIcon
-                        icon={['fab', 'github']}
+                        icon={["fab", "github"]}
                         size="2x"
                         color="white"
                     />
@@ -117,15 +138,14 @@ const LandingPage = () => {
                     className="ml-2"
                 >
                     <FontAwesomeIcon
-                        icon={['fab', 'twitter']}
+                        icon={["fab", "twitter"]}
                         size="2x"
                         color="white"
                     />
                 </a>
             </motion.div>
-
         </div>
     );
-};
+}
 
 export default LandingPage;
