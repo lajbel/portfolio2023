@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function LandingPage() {
+import SocialMedia from "./SocialMedia";
+
+export default function LandingPage() {
     const GLOBAL_DELAY = 0.0;
     const NAME_DELAY = 0.0;
     const JOB_DELAY = 0.3;
@@ -58,11 +59,11 @@ function LandingPage() {
             if (TEXT_SENTENCES[i].delete) {
                 setTimeout(() => {
                     deleteText(TEXT_SENTENCES[i].delete!);
-                }, 2700 + 2000 * i);
+                }, 1700 + 1000 * i);
             } else if (TEXT_SENTENCES[i].write) {
                 setTimeout(() => {
                     writeText(TEXT_SENTENCES[i].write!);
-                }, 1700 + 2000 * i);
+                }, 1700 + 1000 * i);
             }
         }
     }, []);
@@ -86,7 +87,7 @@ function LandingPage() {
                 }}
             >
                 <motion.h1
-                    className="text-4xl font-bold text-white"
+                    className="text-5xl font-bold text-white"
                     initial={{ x: "-100vh" }}
                     animate={{ x: 0 }}
                     transition={{
@@ -97,9 +98,8 @@ function LandingPage() {
                 >
                     <span className="text-blue-500">@</span>lajbel
                 </motion.h1>
-
                 <motion.p
-                    className="text-2xl text-gray-300 text-center text-write"
+                    className="inline text-3xl text-gray-300 text-center text-write"
                     initial={{ y: "100vh" }}
                     animate={{ y: 0 }}
                     transition={{
@@ -110,46 +110,22 @@ function LandingPage() {
                     id="jobPosition"
                 >
                     {jobPosition}
+                    <motion.p
+                        className="inline text-3xl text-gray-300 text-center text-write"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{
+                            ease: "linear",
+                            duration: 0.4,
+                            repeat: Infinity,
+                            repeatType: "reverse",
+                        }}
+                    >
+                        _
+                    </motion.p>
                 </motion.p>
             </motion.div>
-
-            <motion.div
-                className="flex flex-row items-center justify-center"
-                initial={{ y: "0", opacity: 0 }}
-                animate={{ y: -30, opacity: 1 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 120,
-                    delay: GLOBAL_DELAY + ALL_INFO_UP_DELAY,
-                }}
-            >
-                <a
-                    href="https://github.com/lajbel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2"
-                >
-                    <FontAwesomeIcon
-                        icon={["fab", "github"]}
-                        size="2x"
-                        color="white"
-                    />
-                </a>
-                <a
-                    href="https://twitter.com/lajbel"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2"
-                >
-                    <FontAwesomeIcon
-                        icon={["fab", "twitter"]}
-                        size="2x"
-                        color="white"
-                    />
-                </a>
-            </motion.div>
+            <SocialMedia delay={GLOBAL_DELAY + ALL_INFO_UP_DELAY} />
         </div>
     );
 }
-
-export default LandingPage;
